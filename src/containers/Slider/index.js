@@ -49,11 +49,11 @@ const Slider = () => {
           <div className="SlideCard__paginationContainer">
             <div className="SlideCard__pagination">             
                <input
-               key={`${event.title}`}
+               key={`${event.id}`}
                type="radio"
                name="radio-button"
-               checked={idx === index} // Utilisez l'index du composant Slider pour déterminer l'état "checked"
-               onChange={() => setIndex(idx)} // Mettez à jour l'index lorsque le bouton radio est modifié
+               checked={idx === index} 
+               onChange={() => setIndex(idx)} 
              />
             </div>
           </div>
