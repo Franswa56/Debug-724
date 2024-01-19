@@ -13,7 +13,12 @@ import Modal from "../../containers/Modal";
 import { useData } from "../../contexts/DataContext";
 
 const Page = () => {
-  const {last} = useData()
+  const { data } = useData();
+  const events = data?.events; // Obtient le tableau 'events'
+  if (!data) {
+    return <div>Chargement...</div>
+  }
+  const last = events && events.length > 0 ? events[events.length - 1] : undefined;
   return <>
     <header>
       <Menu />

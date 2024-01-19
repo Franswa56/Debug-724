@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useState} from "react";
 import PropTypes from "prop-types";
 import Field, { FIELD_TYPES } from "../../components/Field";
 import Select from "../../components/Select";
@@ -8,16 +8,31 @@ const mockContactApi = () => new Promise((resolve) => { setTimeout(resolve, 1000
 
 const Form = ({ onSuccess, onError }) => {
   const [sending, setSending] = useState(false);
+  const [isSent, setIsSent] = useState(false); // rajout d'un état pour savoir si un message a été envoyé
+
+  // Rajout d'une variable pour l'affichage du bouton
+let buttonText;
+if (sending) {
+  buttonText = "En cours";
+} else if (isSent) {
+  buttonText = "Message envoyé !";
+} else {
+  buttonText = "Envoyer";
+}
   const sendContact = useCallback(
     async (evt) => {
       evt.preventDefault();
       setSending(true);
-      // We try to call mockContactApi
+      setIsSent(false)
+      //  call mockContactApi
       try {
         await mockContactApi();
         setSending(false);
+        onSuccess(); // rajout
+        setIsSent(true);
       } catch (err) {
         setSending(false);
+        setIsSent(false);
         onError(err);
       }
     },
@@ -38,7 +53,8 @@ const Form = ({ onSuccess, onError }) => {
           />
           <Field placeholder="" label="Email" />
           <Button type={BUTTON_TYPES.SUBMIT} disabled={sending}>
-            {sending ? "En cours" : "Envoyer"}
+            {/* {sending ? "En cours" : "Envoyer"} */}
+            {buttonText}
           </Button>
         </div>
         <div className="col">
