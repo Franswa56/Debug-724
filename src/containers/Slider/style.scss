@@ -12,10 +12,11 @@
     position: absolute;
     transition: opacity 1s;
     &--hide {
-      opacity: 0;
+      display: none;
     }
     &--display {
       animation: slide 1s forwards;
+      display: block;
     }
     &__descriptionContainer {
       position: absolute;

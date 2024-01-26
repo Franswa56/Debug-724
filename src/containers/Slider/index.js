@@ -20,19 +20,32 @@ const Slider = () => {
   
   const nextCard = () => {
     setTimeout(
-      () => setIndex(index < byDateDesc.length ? index + 1 : 0),
+      () => setIndex(index < byDateDesc.length - 1 ? index + 1 : 0),
       5000
     );
   };
   useEffect(() => {
     nextCard();
   });
+
+  function radioButtons() {
+    return byDateDesc?.map((event, idx) => (
+      <input
+      key={`${event.title}`}
+        type="radio"
+        name="radio-button"
+        checked={idx === index} 
+        onChange={() => setIndex(idx)} 
+      />
+    ));
+  }
+
   return (
     <div className="SlideCardList">
       {byDateDesc?.map((event, idx) => (
-        <>
+        <div key={`${event.title}-slider`}>
           <div
-            key={`${event.title}-slider`}
+            
             className={`SlideCard SlideCard--${
               index === idx ? "display" : "hide"
             }`}
@@ -48,19 +61,14 @@ const Slider = () => {
           </div>
           <div className="SlideCard__paginationContainer">
             <div className="SlideCard__pagination">             
-               <input
-               key={`${event.id}`}
-               type="radio"
-               name="radio-button"
-               checked={idx === index} 
-               onChange={() => setIndex(idx)} 
-             />
+               {radioButtons()}
             </div>
           </div>
-        </>
+        </div >
       ))}
     </div>
   );
 };
 
 export default Slider;
+

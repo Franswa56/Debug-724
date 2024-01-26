@@ -1,20 +1,24 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import Home from "./index";
+import Page from "./index";
+import Form from "../../containers/Form";
+import Events from '../../containers/Events/index'
+import PeopleCard from "../../components/PeopleCard";
 
 describe("When Form is created", () => {
   it("a list of fields card is displayed", async () => {
-    render(<Home />);
-    await screen.findByText("Email");
-    await screen.findByText("Nom");
+    render(<Form />);
+    screen.getByText("Email");
+    screen.getByText("Nom");
     await screen.findByText("Prénom");
     await screen.findByText("Personel / Entreprise");
   });
 
   describe("and a click is triggered on the submit button", () => {
     it("the success message is displayed", async () => {
-      render(<Home />);
+      render(<Form />);
       fireEvent(
-        screen.findByText("Envoyer"),
+        screen.getByText("Envoyer"),
         new MouseEvent("click", {
           cancelable: true,
           bubbles: true,
@@ -22,24 +26,35 @@ describe("When Form is created", () => {
       );
       await screen.findByText("En cours");
       // await (screen.findByText("Message envoyé !"));
-      await waitFor(() => screen.findAllByText("Message envoyé !"), { timeout: 4000 });
+      await waitFor(() => screen.findAllByText("Message envoyé !"), { timeout: 3000 });
     });
   });
 
 });
 
-
+//jest.setTimeout(10000);
 describe("When a page is created", () => {
   it("a list of events is displayed", () => {
-    // to implement
+    render(<Events />);
+    const eventsList = screen.getByTestId('events');
+    expect(eventsList).toBeInTheDocument();
   })
-  it("a list a people is displayed", () => {
-    // to implement
+  it("a list of people is displayed", async () => {
+    render(<PeopleCard position="CEO" name="Samira" imageSrc="path_to_image" />)
+
+    const name = await screen.findByText('Samira',);
+
+    expect(name).toBeInTheDocument();
+  });
   })
-  it("a footer is displayed", () => {
-    // to implement
-  })
+  it("displays a footer", async () => {
+    render(<Home />);
+    
+    const footer = await screen.findByTestId('footer', {}, { timeout: 3500 });
+    
+    expect(footer).toBeInTheDocument();
+  });
   it("an event card, with the last event, is displayed", () => {
     // to implement
   })
-});
+;
