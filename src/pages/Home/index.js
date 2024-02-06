@@ -18,7 +18,7 @@ const Page = () => {
   if (!data) {
     return <div>Chargement...</div>
   }
-  const last = events && events.length > 0 ? events[events.length - 1] : undefined;
+  const last = events[events.length - 1]
   return <>
     <header>
       <Menu />

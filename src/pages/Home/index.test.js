@@ -1,9 +1,6 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import Home from "./index";
 import Page from "./index";
 import Form from "../../containers/Form";
-import Events from '../../containers/Events/index'
-import PeopleCard from "../../components/PeopleCard";
 import DataContext from "../../contexts/DataContext";
 
 describe("When Form is created", () => {
