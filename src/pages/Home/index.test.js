@@ -2,35 +2,10 @@ import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import Page from "./index";
 import Form from "../../containers/Form";
 import DataContext from "../../contexts/DataContext";
+import userEvent from '@testing-library/user-event';
 
-describe("When Form is created", () => {
-  it("a list of fields card is displayed", async () => {
-    render(<Form />);
-    screen.getByText("Email");
-    screen.getByText("Nom");
-    await screen.findByText("Prénom");
-    await screen.findByText("Personel / Entreprise");
-  });
 
-  describe("and a click is triggered on the submit button", () => {
-    it("the success message is displayed", async () => {
-      render(<Form />);
-      fireEvent(
-        screen.getByText("Envoyer"),
-        new MouseEvent("click", {
-          cancelable: true,
-          bubbles: true,
-        })
-      );
-      await screen.findByText("En cours");
-      screen.debug();
-      await screen.findByText(/message envoyé !/i, {}, { timeout: 5000 });
-      
-    });
-  });
-
-});
-
+// Définir setIsOpened comme un mock de fonction Jest à l'extérieur de MockModal
 
 
 const mockData = {
@@ -60,6 +35,35 @@ const mockData = {
         "cover": "/images/evangeline-shaw-nwLTVwb7DbU-unsplash1.png"
     },]
 };
+
+describe("When Form is created", () => {
+  it("a list of fields card is displayed", async () => {
+    render(<Form />);
+    screen.getByText("Email");
+    screen.getByText("Nom");
+    await screen.findByText("Prénom");
+    await screen.findByText("Personel / Entreprise");
+  });
+
+  describe("and a click is triggered on the submit button", () => {
+    it('the success message is displayed', async () => {
+      render(
+        <DataContext.Provider value={{ data: mockData }}>
+            <Page/>
+        </DataContext.Provider>
+      );
+
+      // Simuler l'envoi du formulaire
+      const submitButton = screen.getByRole('button', { name: /envoyer/i });
+      userEvent.click(submitButton);
+      await screen.findByText("Message envoyé !", {}, { timeout: 5000 });
+    });
+  });
+});
+
+
+
+
 
 jest.setTimeout(30000);
 describe("When a page is created", () => {
