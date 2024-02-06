@@ -58,9 +58,9 @@ const Page = () => {
       </section>
       <section className="EventsContainer">
         <h2 className="Title">Nos réalisations</h2>
-        <EventList />
+        <EventList data-testid='events' />
       </section>
-      <section className="PeoplesContainer">
+      <section className="PeoplesContainer" data-testid='peopleList'>
         <h2 className="Title">Notre équipe</h2>
         <p>Une équipe d’experts dédiés à l’ogranisation de vos événements</p>
         <div className="ListContainer" >
@@ -127,6 +127,7 @@ const Page = () => {
           date={new Date(last?.date)}
           small
           label="boom"
+          data-testid='last'
         />
       </div>
       <div className="col contact">
