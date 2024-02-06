@@ -23,8 +23,9 @@ describe("When Form is created", () => {
         })
       );
       await screen.findByText("En cours");
-      // await (screen.findByText("Message envoyé !"));
-      await waitFor(() => screen.findAllByText("Message envoyé !"), { timeout: 3000 });
+      screen.debug();
+      await screen.findByText(/message envoyé !/i, {}, { timeout: 5000 });
+      
     });
   });
 

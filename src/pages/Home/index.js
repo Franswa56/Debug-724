@@ -18,7 +18,13 @@ const Page = () => {
   if (!data) {
     return <div>Chargement...</div>
   }
-  const last = events[events.length - 1]
+
+  // Trier les événements par date dans l'ordre décroissant
+const sortedEvents = events.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+// Sélectionner le premier élément du tableau trié
+const last = sortedEvents[0];
+
   return <>
     <header>
       <Menu />
